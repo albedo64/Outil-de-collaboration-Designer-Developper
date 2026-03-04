@@ -1,0 +1,106 @@
+Back-end
+_________________________________________________________________________________________________________
+/projet collaboration designer_Developper/
+|-- app/
+|   |-- static/
+|   |   |-- css/
+|   |   |   |-- style.css
+|   |   |-- js/
+|   |   |   |-- script.js
+|   |
+|   |-- templates/
+|   |   |-- index.html
+|   |   |-- login.html
+|   |
+|   |-- __init__.py
+|   |-- auth.py
+|   |-- designs.py
+|   |-- extensions.py
+|   |-- ... (autres fichiers)
+|
+|-- run.py
+|-- config.py
+|-- venv/
+|-- ...
+
+
+
+
+
+
+Front-end
+_______________________________________________________________________________________________________
+/src/app/
+|
+|-- core/                        # Services singleton, guards, intercepteurs (Chargé une seule fois)
+|    |-- guards/
+|    |   |-- auth.guard.ts      # VÉRIFIE : Est-ce que l'utilisateur est connecté ? (Token présent)
+|    |   |-- role.guard.ts      # VÉRIFIE : Le rôle (designer/developer) a-t-il la permission d'accéder à la route ?
+|    |
+|    |-- interceptors/
+|    |   |-- auth.interceptor.ts # ATTACHE AUTOMATIQUEMENT le JWT à l'en-tête "Authorization: Bearer <token>"
+|    |
+|    |-- services/
+|    |   |-- auth.service.ts    # Gère login, logout, register, stockage du token et du rôle
+|    |
+|    |-- models/
+|    |   |-- user.model.ts      # Interface pour l'objet utilisateur
+|    |
+|    |-- core.module.ts         # Fournit ces singletons
+|
+|-- features/                    # Modules de fonctionnalités (chargés paresseusement ou "Lazy Loaded")
+|    |
+|    |-- auth/                    # Module pour l'authentification
+|    |   |-- login/
+|    |   |-- register/
+|    |   |-- auth-routing.module.ts
+|    |   |-- auth.module.ts
+|    |
+|    |-- design-system/           # NOUVEAU MODULE: Gestion des Tokens de Design (API /tokens)
+|    |   |-- services/
+|    |   |   |-- token.service.ts # Gère les appels API pour les tokens de design (couleurs, espacements)
+|    |   |
+|    |   |-- models/
+|    |   |   |-- token.model.ts   # Interface pour les objets Token (name, value, type)
+|    |   |
+|    |   |-- components/
+|    |   |   |-- token-list/      # Affiche et permet de copier les tokens pour le développeur
+|    |   |   |-- token-manager/   # (Designer Only) Permet de modifier ou d'ajouter des tokens (POST/PUT /tokens)
+|    |   |
+|    |   |-- design-system-routing.module.ts
+|    |   |-- design-system.module.ts
+|    |
+|    |-- designs/                 # Module principal de Handoff
+|    |   |-- services/
+|    |   |   |-- design.service.ts # Gère les appels API pour designs, commentaires, statut, assets
+|    |   |
+|    |   |-- models/
+|    |   |   |-- design.model.ts
+|    |   |   |-- comment.model.ts
+|    |   |   |-- design-spec.model.ts # Interface pour les specs techniques générées (CSS, dimensions)
+|    |   |
+|    |   |-- components/
+|    |   |   |-- design-list/     # Liste des designs (avec statut)
+|    |   |   |-- design-import/   # (Designer Only) Composant pour soumettre l'URL d'importation (POST /designs/import)
+|    |   |   |-- design-detail/   # Conteneur principal de la vue Handoff
+|    |   |   |   |-- design-viewer/         # Affichage de la maquette (Image/SVG/Rendu JSON)
+|    |   |   |   |-- dev-mode-inspection/   # CŒUR du Handoff : Logique JavaScript de calcul des mesures au survol/clic
+|    |   |   |-- comment-section/ # Affichage et ajout des commentaires contextuels (GET/POST /comments)
+|    |   |
+|    |   |-- designs-routing.module.ts
+|    |   |-- designs.module.ts
+|
+|-- shared/                      # Composants et modules réutilisables (Composants UI "Dumb")
+|    |-- components/
+|    |   |-- loading-spinner/
+|    |   |-- header/
+|    |   |-- role-indicator/    # Affiche le rôle actuel de l'utilisateur
+|    |
+|    |-- layout/
+|    |   |-- main-layout.component.ts # Layout principal (header/sidebar/router-outlet)
+|    |
+|    |-- shared.module.ts
+|
+|-- app-routing.module.ts        # Routage principal (Lazy Loading des modules de 'features/')
+|-- app.component.ts
+|-- app.module.ts

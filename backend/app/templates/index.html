@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Mon Application</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Collaboration Designer & Développeur</h1>
+        <p>La plateforme de handoff qui simplifie votre workflow.</p>
+        <div class="actions">
+            <a href="/login" class="btn">Se connecter</a>
+            <a href="/register" class="btn btn-secondary">S'inscrire</a>
+        </div>
+        <div id="user-status" style="margin-top: 20px;">
+            <!-- Le statut de l'utilisateur sera injecté ici par le JS -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
